@@ -1,7 +1,13 @@
 const express = require('express');
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+
 const Users = require('../models/User');
-const { registerValidation, loginValidation } = require('../userValid');
+const { registerValidation, loginValidation } = require('../controllers/userValidate');
+
+dotenv.config();
+
 
 const router = express.Router();
 
@@ -36,13 +42,14 @@ router.post('/register', async (req, res) => {
 });
 
 // LOGIN API ROUTE 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
+
     // DATA VALIDATION 
     const { error } = loginValidation(req.body);
     if (error) return res.send({ message: error.details[0].message }).status(400);
 
     const user = await Users.findOne({ username: req.body.username });
-    if (!user) return res.send('Sorry you entered wrong username').status(401);
+    if (!user) return res.send('User not found').status(401);
 
     if (user.password === req.body.password) {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
