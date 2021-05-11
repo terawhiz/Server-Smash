@@ -25,6 +25,18 @@ const userShema = mongoose.Schema({
         min: 8,
         max: 1024
     },
+    following: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        }
+    ],
+    followers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        }
+    ],
     date: {
         type: Date,
         default: Date.now()
