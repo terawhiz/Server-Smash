@@ -33,7 +33,6 @@ router.post('/like/:postId', async (req, res) => {
             { $push: { likedBy: req.body.userId } },
             { new: true }
         );
-        console.log(result);
         res.send(result);
     } catch (error) {
         res.send(error).status(400);
@@ -47,7 +46,21 @@ router.post('/dislike/:postId', async (req, res) => {
             { $pull: { likedBy: req.body.userId } },
             { new: true }
         );
-        console.log(result);
+        res.send(result);
+    } catch (error) {
+        res.send(error).status(400);
+    }
+});
+
+router.post('/comment/:postId', async (req, res) => {
+    try {
+        const value = { content: req.body.value, postedBy: req.body.userId };
+        const result = await Posts.findByIdAndUpdate(
+            req.params.postId,
+            { $push: { comments: value } },
+            { new: true }
+        );
+        // console.log(result);
         res.send(result);
     } catch (error) {
         res.send(error).status(400);
