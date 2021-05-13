@@ -6,9 +6,15 @@ const Posts = require('../models/Posts');
 
 const router = express.Router();
 
+// NEW POST ROUTE 
 router.post('/new', async (req, res) => {
+
+    // request -->
+    //     "userId": user id of the user,
+    //     "content ": content of the post
+
     const newPost = new Posts({
-        postedBy: req.body.user,
+        postedBy: req.body.userId,
         content: req.body.content,
         comments: [],
         likedBy: [],
@@ -21,12 +27,18 @@ router.post('/new', async (req, res) => {
     }
 });
 
+// GET ALL POSTS ROUTE 
 router.get('/getPosts', async (req, res) => {
     const allPosts = await Posts.find();
     res.send(allPosts).status(200);
 });
 
+
+// LIKE A POST ROUTE 
 router.post('/like/:postId', async (req, res) => {
+
+    // REQUEST: POST ID FROM PARAMS AND USER ID FROM DATA 
+
     try {
         const result = await Posts.findByIdAndUpdate(
             req.params.postId,
@@ -39,7 +51,12 @@ router.post('/like/:postId', async (req, res) => {
     }
 });
 
+
+// DISLIKE A POST ROUTE 
 router.post('/dislike/:postId', async (req, res) => {
+
+    // REQUEST --> POST ID FROM THE URL PARAMETER AND USER ID FROM THE REQYUEST BODY 
+
     try {
         const result = await Posts.findByIdAndUpdate(
             req.params.postId,
@@ -52,7 +69,13 @@ router.post('/dislike/:postId', async (req, res) => {
     }
 });
 
+
+// COMMENT ON A POST ROUTE 
 router.post('/comment/:postId', async (req, res) => {
+
+    // REQUEST --> POST ID FROM THE URL PARAMETER
+    //             USER ID AND COMMENT VALUE FROM THE REQUEST BODY 
+
     try {
         const value = { content: req.body.value, postedBy: req.body.userId };
         const result = await Posts.findByIdAndUpdate(
@@ -66,6 +89,8 @@ router.post('/comment/:postId', async (req, res) => {
         res.send(error).status(400);
     }
 });
+
+
 
 
 module.exports = router;

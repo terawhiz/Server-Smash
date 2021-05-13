@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 
 const Users = require('../models/User');
-const { registerValidation, loginValidation } = require('../controllers/userValidate');
+const { registerValidation, loginValidation } = require('../middlewares/userValidate');
 
 dotenv.config();
 
@@ -59,5 +59,7 @@ router.post('/login', async (req, res) => {
     }
 
 });
+
+
 
 module.exports = router;

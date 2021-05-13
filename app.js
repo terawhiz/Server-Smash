@@ -11,6 +11,7 @@ const app = express();
 
 // MIDDLEWARES
 const authRoute = require('./router/userAuth');
+const userRoute = require('./router/userHandle');
 const postRoute = require('./router/userPost');
 
 
@@ -22,7 +23,8 @@ mongoose.set('useFindAndModify', false);
 
 app.use(express.json());
 app.use(cors());
-app.use('/api/user', authRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/user', userRoute);
 app.use('/api/post', postRoute);
 
 
