@@ -34,7 +34,7 @@ module.exports.followersInc = function (userId, followId) {
 
 module.exports.followingDec = function (userId, followId) {
     try {
-        const following = await Users.findByIdAndUpdate(
+        const following = Users.findByIdAndUpdate(
             userId,
             { $pull: { following: followId } },
             { new: true }
@@ -48,7 +48,7 @@ module.exports.followingDec = function (userId, followId) {
 
 module.exports.followersDec = function (userId, followId) {
     try {
-        const followers = await Users.findByIdAndUpdate(
+        const followers = Users.findByIdAndUpdate(
             followId,
             { $pull: { followers: userId } },
             { new: true }
