@@ -30,7 +30,7 @@ router.post('/new', async (req, res) => {
 
 // GET ALL POSTS ROUTE 
 router.get('/getPosts', async (req, res) => {
-    const allPosts = await Posts.find().populate('postedBy', '_id');
+    const allPosts = await Posts.find();
     res.send(allPosts).status(200);
 });
 
