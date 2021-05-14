@@ -1,6 +1,7 @@
 const express = require('express');
 
 
+const Users = require('../models/User');
 const Posts = require('../models/Posts');
 
 
@@ -29,7 +30,7 @@ router.post('/new', async (req, res) => {
 
 // GET ALL POSTS ROUTE 
 router.get('/getPosts', async (req, res) => {
-    const allPosts = await Posts.find();
+    const allPosts = await Posts.find().populate('postedBy', '_id');
     res.send(allPosts).status(200);
 });
 
@@ -90,7 +91,22 @@ router.post('/comment/:postId', async (req, res) => {
     }
 });
 
+router.post('/homeFeed', async (req, res) => {
+    // GIMME YOUR UESR ID AND ME GIVE YOU POSTS
+    try {
+        const result = await Users.findById(req.body.userId);
+        const following = result.following;
 
+        const sendData = await Promise.all(following.map(async (userId) => {
+            return Posts.find({ postedBy: userId });
+        }));
+
+
+        res.send(sendData).status(200);
+    } catch (error) {
+        res.send(error.message).status(404);
+    }
+});
 
 
 module.exports = router;
