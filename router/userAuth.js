@@ -4,7 +4,10 @@ const dotenv = require('dotenv');
 
 
 const Users = require('../models/User');
-const { registerValidation, loginValidation } = require('../middlewares/userValidate');
+const { registerValidation, loginValidation } = require('../middlewares/authValidate');
+const { registerSchema, loginSchema } = require('../validations/userValidations');
+
+
 
 dotenv.config();
 
@@ -12,11 +15,8 @@ dotenv.config();
 const router = express.Router();
 
 // REGISTRATION API ROUTE
-router.post('/register', async (req, res) => {
-    // DATA VALIDATOIN
-    const { error } = registerValidation(req.body);
-    if (error) return res.send({ message: error.details[0].message }).status(400);
-
+router.post('/register', registerValidation(registerSchema), async (req, res) => {
+    
     // EMAIL CHECK 
     const emailExist = await Users.findOne({ email: req.body.email });
 
@@ -42,12 +42,7 @@ router.post('/register', async (req, res) => {
 });
 
 // LOGIN API ROUTE 
-router.post('/login', async (req, res) => {
-
-    // DATA VALIDATION 
-    const { error } = loginValidation(req.body);
-    if (error) return res.send({ message: error.details[0].message }).status(400);
-
+router.post('/login', loginValidation(loginSchema),async (req, res) => {
     const user = await Users.findOne({ username: req.body.username });
     if (!user) return res.send('User not found').status(401);
 
