@@ -1,18 +1,18 @@
-const Joi = require('joi');
+const yup = require('yup');
 // REGISTER VALIDATION 
-const registerSchema = new Joi.object({
-        username: Joi.string().alphanum().min(4).max(30).required(),
-        name: Joi.string().alphanum().max(256).required(),
-        email: Joi.string().email().required(),
-        password: Joi.string().min(10).max(40)
-    });
+const registerSchema = new yup.object({
+    username: yup.string().min(4).max(30).required(),
+    name: yup.string().max(256).required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(10).max(40).required()
+});
 
 
 // LOGIN VALIDATION 
-const loginSchema = new Joi.object({
-        username: Joi.string().alphanum().min(4).max(30),
-        password: Joi.string().min(10).max(40),
-    });
+const loginSchema = new yup.object({
+    username: yup.string().min(4).max(30).required(),
+    password: yup.string().min(10).max(40).required(),
+});
 
 module.exports.registerSchema = registerSchema;
 module.exports.loginSchema = loginSchema;

@@ -1,14 +1,15 @@
 const express = require('express');
-
-
 const Users = require('../models/User');
 const Posts = require('../models/Posts');
+const { postValidation } = require('../middlewares/postValidate');
+const { postSchema } = require('../validations/postValidation');
 
 
 const router = express.Router();
 
+
 // NEW POST ROUTE 
-router.post('/new', async (req, res) => {
+router.post('/new', postValidation(postSchema), async (req, res) => {
 
     // request -->
     //     "userId": user id of the user,
@@ -30,6 +31,7 @@ router.post('/new', async (req, res) => {
 
 // GET ALL POSTS ROUTE 
 router.get('/getPosts', async (req, res) => {
+    console.log(req.ip);
     const allPosts = await Posts.find();
     res.send(allPosts).status(200);
 });

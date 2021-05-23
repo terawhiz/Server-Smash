@@ -1,7 +1,9 @@
+
+
 const registerValidation = (schema) => async (req, res, next) => {
     try {
-        schema.validate(req.body);
-        return next();        
+        await schema.validate(req.body);
+        return next();
     } catch (error) {
         return res.status(400).send(error);
     }
@@ -9,8 +11,8 @@ const registerValidation = (schema) => async (req, res, next) => {
 
 const loginValidation = () => async (req, res, next) => {
     try {
-        schema.validate(req.body);
-        return next();        
+        await schema.validate(req.body);
+        return next();
     } catch (error) {
         return res.status(400).send(error);
     }
