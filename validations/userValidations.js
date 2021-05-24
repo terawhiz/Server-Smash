@@ -10,9 +10,10 @@ const registerSchema = new yup.object({
 
 // LOGIN VALIDATION 
 const loginSchema = new yup.object({
-    username: yup.string().min(4).max(30).required(),
-    password: yup.string().min(10).max(40).required(),
+    username: yup.string().min(4).max(30).required("username is required"),
+    password: yup.string().min(10).max(40).required("password is required"),
 });
 
 module.exports.registerSchema = registerSchema;
 module.exports.loginSchema = loginSchema;
+

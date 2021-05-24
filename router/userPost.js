@@ -31,7 +31,6 @@ router.post('/new', postValidation(postSchema), async (req, res) => {
 
 // GET ALL POSTS ROUTE 
 router.get('/getPosts', async (req, res) => {
-    console.log(req.ip);
     const allPosts = await Posts.find();
     res.send(allPosts).status(200);
 });

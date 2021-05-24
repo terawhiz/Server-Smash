@@ -12,6 +12,7 @@ const app = express();
 const authRoute = require('./router/userAuth');
 const userRoute = require('./router/userHandle');
 const postRoute = require('./router/userPost');
+const { authJwt } = require('./middlewares/authValidate');
 
 
 // MONGODB CONNECT 
@@ -25,13 +26,13 @@ mongoose.set('useFindAndModify', false);
 app.use(express.json());
 app.use(cors());
 app.use('/api/auth', authRoute);
-app.use('/api/user', userRoute);
-app.use('/api/post', postRoute);
+app.use('/api/user', authJwt, userRoute);
+app.use('/api/post', authJwt, postRoute);
 
 
 
 // PORT listen
 app.listen(2000, '0.0.0.0', () => {
-    console.log('LIstening on port 2000...');
+    console.log('Listening on port 2000...');
 });
 

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Users = require('../models/User');
 const Posts = require('../models/Posts');
 
-module.exports.followingInc = function (userId, followId) {
+const followingInc = function (userId, followId) {
     try {
         const following = Users.findByIdAndUpdate(
             userId,
@@ -18,7 +18,7 @@ module.exports.followingInc = function (userId, followId) {
 }
 
 
-module.exports.followersInc = function (userId, followId) {
+const followersInc = function (userId, followId) {
     try {
         const followers = Users.findByIdAndUpdate(
             followId,
@@ -32,7 +32,7 @@ module.exports.followersInc = function (userId, followId) {
     }
 }
 
-module.exports.followingDec = function (userId, followId) {
+const followingDec = function (userId, followId) {
     try {
         const following = Users.findByIdAndUpdate(
             userId,
@@ -46,7 +46,7 @@ module.exports.followingDec = function (userId, followId) {
     }
 }
 
-module.exports.followersDec = function (userId, followId) {
+const followersDec = function (userId, followId) {
     try {
         const followers = Users.findByIdAndUpdate(
             followId,
@@ -60,11 +60,20 @@ module.exports.followersDec = function (userId, followId) {
     }
 }
 
-module.exports.profile = userId => {
+const profile = userId => {
     try {
         const blah = Posts.find({ postedBy: userId }).populate('postedBy');
         return blah;
     } catch (error) {
         return error;
     }
+}
+
+
+module.exports = {
+    profile,
+    followersDec,
+    followingDec,
+    followingInc,
+    followersInc
 }

@@ -17,7 +17,6 @@ router.post('/follow/:followId', async (req, res, next) => {
 
 router.post('/unfollow/:followId', async (req, res, next) => {
     try {
-
         const followingDecrement = await followingDec(req.body.userId, req.params.followId);
         const followersDecrement = await followersDec(req.body.userId, req.params.followId);
 

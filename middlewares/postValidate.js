@@ -10,4 +10,4 @@ const postValidation = (schema) => async (req, res, next) => {
 }
 
 
-module.exports.postValidation = postValidation;
+module.exports = { postValidation };
