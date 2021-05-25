@@ -12,7 +12,7 @@ const app = express();
 const authRoute = require('./router/userAuth');
 const userRoute = require('./router/userHandle');
 const postRoute = require('./router/userPost');
-const { authJwt } = require('./middlewares/authValidate');
+const { authJwt } = require('./middlewares/auth');
 
 
 // MONGODB CONNECT 

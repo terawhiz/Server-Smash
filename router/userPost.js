@@ -1,11 +1,9 @@
-const express = require('express');
+const router = require('express').Router();
 const Users = require('../models/User');
 const Posts = require('../models/Posts');
-const { postValidation } = require('../middlewares/postValidate');
+const { postValidation } = require('../middlewares/post');
 const { postSchema } = require('../validations/postValidation');
 
-
-const router = express.Router();
 
 
 // NEW POST ROUTE 
@@ -109,5 +107,14 @@ router.post('/homeFeed', async (req, res) => {
     }
 });
 
+
+router.post('/userPost', async (req, res) => {
+    try {
+        const blah = await Posts.find({ postedBy: req.body.posterId });
+        res.send(blah);
+    } catch (error) {
+        res.send(error);
+    }
+});
 
 module.exports = router;

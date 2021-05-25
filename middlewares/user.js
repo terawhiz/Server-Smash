@@ -62,13 +62,12 @@ const followersDec = function (userId, followId) {
 
 const profile = userId => {
     try {
-        const blah = Posts.find({ postedBy: userId }).populate('postedBy');
-        return blah;
+        const blah = Users.findById(userId);
+        return blah
     } catch (error) {
-        return error;
+        return error
     }
 }
-
 
 module.exports = {
     profile,

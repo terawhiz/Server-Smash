@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const { followingInc, followersInc, followingDec, followersDec, profile } = require('../middlewares/userMiddleware');
+const { followingInc, followersInc, followingDec, followersDec, profile } = require('../middlewares/user');
 
-router.post('/follow/:followId', async (req, res, next) => {
+router.post('/follow/:followId', async (req, res) => {
     try {
 
-        const followingIncrement = await followingInc(req.body.userId, req.params.followId);
-        const followersIncrement = await followersInc(req.body.userId, req.params.followId);
+        const followingIncrement = await followingInc(req.userId, req.params.followId);
+        const followersIncrement = await followersInc(req.userId, req.params.followId);
 
         res.send({ followersIncrement, followingIncrement }).status(200);
     } catch (error) {
@@ -15,10 +15,10 @@ router.post('/follow/:followId', async (req, res, next) => {
     }
 });
 
-router.post('/unfollow/:followId', async (req, res, next) => {
+router.post('/unfollow/:followId', async (req, res) => {
     try {
-        const followingDecrement = await followingDec(req.body.userId, req.params.followId);
-        const followersDecrement = await followersDec(req.body.userId, req.params.followId);
+        const followingDecrement = await followingDec(req.userId, req.params.followId);
+        const followersDecrement = await followersDec(req.userId, req.params.followId);
 
         res.send({ followersDecrement, followingDecrement }).status(200);
     } catch (error) {
@@ -28,9 +28,10 @@ router.post('/unfollow/:followId', async (req, res, next) => {
 });
 
 
-router.get('/profile/:userId', async (req, res) => {
+router.post('/profile/', async (req, res) => {
     try {
-        const result = await profile(req.params.userId);
+        const profileId = req.body.profileId;
+        const result = await profile(profileId);
         res.send(result);
     } catch (error) {
         res.send(error.message);

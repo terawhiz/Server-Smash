@@ -1,18 +1,15 @@
-const express = require('express');
+
+// IMPORTING MODULES
+require('dotenv').config();
+const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
 
-
+// IMPORTING MODELS AND MIDDLEWARES
 const Users = require('../models/User');
-const { registerValidation, loginValidation } = require('../middlewares/authValidate');
+const { registerValidation, loginValidation } = require('../middlewares/auth');
 const { registerSchema, loginSchema } = require('../validations/userValidations');
 
 
-
-dotenv.config();
-
-
-const router = express.Router();
 
 // REGISTRATION API ROUTE
 router.post('/register', registerValidation(registerSchema), async (req, res) => {

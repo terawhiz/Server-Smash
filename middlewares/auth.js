@@ -23,8 +23,12 @@ const authJwt = async (req, res, next) => {
         const token = req.headers["x-access-token"];
         jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decoded) => {
             if (!error) {
-                req.userId = decoded.id;
-                return next();
+                if (decoded.id === req.body.userId) {
+                    req.userId = decoded.id;
+                    return next();
+                } else {
+                    return res.json({ auth: 'false', message: 'something went wrong' });
+                }
             } else {
                 return res.send(error);
             }
