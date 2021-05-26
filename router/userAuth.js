@@ -16,8 +16,16 @@ const { registerSchema,
 
 
 // AUTHENTICATION ROUTES
-router.post('/register', registerValidation(registerSchema), register);
-router.post('/login', loginValidation(loginSchema), login);
+router.post(
+    '/register',
+    registerValidation(registerSchema),
+    register
+);
+router.post(
+    '/login',
+    loginValidation(loginSchema),
+    login
+);
 
 
 

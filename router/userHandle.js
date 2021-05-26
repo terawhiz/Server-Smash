@@ -5,8 +5,17 @@ const { profile,
     unfollow
 } = require('../middlewares/user');
 
-router.post('/follow/:followId', follow);
-router.post('/unfollow/:followId', unfollow);
-router.post('/profile/', profile);
+router.post(
+    '/follow/:followId',
+    follow
+);
+router.post(
+    '/unfollow/:followId',
+    unfollow
+);
+router.post(
+    '/profile/',
+    profile
+);
 
 module.exports = router;
