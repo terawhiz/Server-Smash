@@ -14,6 +14,9 @@ const userShema = mongoose.Schema({
         max: 40,
         required: true,
     },
+    profileUrl: {
+        type: String
+    },
     email: {
         type: String,
         min: 7,

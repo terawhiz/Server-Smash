@@ -6,6 +6,9 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    imgUrl: {
+        type: String
+    },
     comments: [
         {
             content: String,

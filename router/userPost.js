@@ -6,6 +6,24 @@ const { postSchema } = require('../validations/postValidation');
 
 
 
+router.post('/homeFeed', async (req, res) => {
+    // GIMME YOUR UESR ID AND ME GIVE YOU POSTS
+    try {
+        const result = await Users.findById(req.body.userId);
+        const following = result.following;
+
+        const sendData = await Promise.all(following.map(async (userId) => {
+            return Posts.find({ postedBy: userId });
+        }));
+
+
+        res.status(404).send(sendData);
+    } catch (error) {
+        res.status(404).send(error.message);
+    }
+});
+
+
 // NEW POST ROUTE 
 router.post('/new', postValidation(postSchema), async (req, res) => {
 
@@ -29,8 +47,13 @@ router.post('/new', postValidation(postSchema), async (req, res) => {
 
 // GET ALL POSTS ROUTE 
 router.get('/getPosts', async (req, res) => {
-    const allPosts = await Posts.find();
-    res.send(allPosts).status(200);
+    if (req.admin === true) {
+        const allPosts = await Posts.find();
+        res.status(201).send(allPosts);
+    } else {
+        res.status(403).json({ status: 403, message: 'you\'are not allowed' });
+    }
+
 });
 
 
@@ -47,7 +70,7 @@ router.post('/like/:postId', async (req, res) => {
         );
         res.send(result);
     } catch (error) {
-        res.send(error).status(400);
+        res.status(400).send(error.message);
     }
 });
 
@@ -65,7 +88,7 @@ router.post('/dislike/:postId', async (req, res) => {
         );
         res.send(result);
     } catch (error) {
-        res.send(error).status(400);
+        res.status(400).send(error.message);
     }
 });
 
@@ -86,24 +109,7 @@ router.post('/comment/:postId', async (req, res) => {
         // console.log(result);
         res.send(result);
     } catch (error) {
-        res.send(error).status(400);
-    }
-});
-
-router.post('/homeFeed', async (req, res) => {
-    // GIMME YOUR UESR ID AND ME GIVE YOU POSTS
-    try {
-        const result = await Users.findById(req.body.userId);
-        const following = result.following;
-
-        const sendData = await Promise.all(following.map(async (userId) => {
-            return Posts.find({ postedBy: userId });
-        }));
-
-
-        res.send(sendData).status(200);
-    } catch (error) {
-        res.send(error.message).status(404);
+        res.status(400).send(error.message);
     }
 });
 
@@ -113,7 +119,7 @@ router.post('/userPost', async (req, res) => {
         const blah = await Posts.find({ postedBy: req.body.posterId });
         res.send(blah);
     } catch (error) {
-        res.send(error);
+        res.send(error.message);
     }
 });
 

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Users = require('../models/User');
-const Posts = require('../models/Posts');
 
 const followingInc = function (userId, followId) {
     try {
@@ -12,7 +11,6 @@ const followingInc = function (userId, followId) {
         );
         return following
     } catch (error) {
-        console.log('ERROR 1');
         return error
     }
 }
@@ -27,7 +25,6 @@ const followersInc = function (userId, followId) {
         );
         return followers
     } catch (error) {
-        console.log('ERROR 2');
         return error
     }
 }
@@ -41,7 +38,6 @@ const followingDec = function (userId, followId) {
         );
         return following
     } catch (error) {
-        console.log('ERROR 1');
         return error
     }
 }
@@ -55,7 +51,6 @@ const followersDec = function (userId, followId) {
         );
         return followers
     } catch (error) {
-        console.log('ERROR 2');
         return error
     }
 }
