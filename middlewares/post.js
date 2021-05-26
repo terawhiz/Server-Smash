@@ -99,7 +99,7 @@ const comment = async (req, res) => {
     //             USER ID AND COMMENT VALUE FROM THE REQUEST BODY 
 
     try {
-        const value = { content: req.body.value, postedBy: req.body.userId };
+        const value = { content: req.body.content, postedBy: req.body.userId };
         const result = await Posts.findByIdAndUpdate(
             req.params.postId,
             { $push: { comments: value } },
