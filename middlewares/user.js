@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
-
 const Users = require('../models/User');
+
 
 const followingInc = function (userId, followId) {
     try {
@@ -29,6 +28,7 @@ const followersInc = function (userId, followId) {
     }
 }
 
+
 const followingDec = function (userId, followId) {
     try {
         const following = Users.findByIdAndUpdate(
@@ -41,6 +41,7 @@ const followingDec = function (userId, followId) {
         return error
     }
 }
+
 
 const followersDec = function (userId, followId) {
     try {
@@ -55,19 +56,44 @@ const followersDec = function (userId, followId) {
     }
 }
 
-const profile = userId => {
+
+const profile = async (req, res) => {
     try {
-        const blah = Users.findById(userId);
-        return blah
+        const profileId = req.body.profileId;
+        const result = await Users.findById(profileId);
+        res.send(result);
     } catch (error) {
-        return error
+        res.send(error.message);
     }
 }
 
+
+const follow = async (req, res) => {
+    try {
+        const followingIncrement = await followingInc(req.userId, req.params.followId);
+        const followersIncrement = await followersInc(req.userId, req.params.followId);
+
+        res.send({ followersIncrement, followingIncrement }).status(200);
+    } catch (error) {
+        res.send(error).status(400);
+    }
+}
+
+
+const unfollow = async (req, res) => {
+    try {
+        const followingDecrement = await followingDec(req.userId, req.params.followId);
+        const followersDecrement = await followersDec(req.userId, req.params.followId);
+
+        res.send({ followersDecrement, followingDecrement }).status(200);
+    } catch (error) {
+        res.send(error).status(400);
+    }
+}
+
+
 module.exports = {
     profile,
-    followersDec,
-    followingDec,
-    followingInc,
-    followersInc
+    follow,
+    unfollow,
 }
