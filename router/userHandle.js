@@ -1,8 +1,11 @@
 const router = require('express').Router();
 
-const { profile,
+
+const {
+    profile,
     follow,
-    unfollow
+    unfollow,
+    profileUpload
 } = require('../middlewares/user');
 
 router.post(
@@ -17,5 +20,7 @@ router.post(
     '/profile/',
     profile
 );
+
+
 
 module.exports = router;

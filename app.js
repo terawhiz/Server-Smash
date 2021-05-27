@@ -13,6 +13,7 @@ const app = express();
 const authRoute = require('./router/userAuth');
 const userRoute = require('./router/userHandle');
 const postRoute = require('./router/userPost');
+const userMedia = require('./router/userMedia');
 const { authJwt } = require('./middlewares/auth');
 
 
@@ -27,14 +28,17 @@ mongoose.set('useFindAndModify', false);
 app.use(express.json());
 app.use(cors());
 app.use(compression());
+app.use('/_dsfjhsdjfh', express.static(__dirname + '/_dsfjhsdjfh'));
 app.use('/api/auth', authRoute);
 app.use('/api/user', authJwt, userRoute);
 app.use('/api/post', authJwt, postRoute);
+app.use('/api/media', userMedia);
 
 
 
 // PORT listen
-app.listen(2000, '0.0.0.0', () => {
-    console.log('Listening on port 2000...');
+const port = process.env.PORT;
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Listening on port ${port}...`);
 });
 

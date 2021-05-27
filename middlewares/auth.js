@@ -27,7 +27,8 @@ const register = async (req, res) => {
         username: req.body.username,
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        profileUrl: `http://${req.rawHeaders[1]}/images/user/default.jpg`
     });
     try {
         const savedUser = await user.save();

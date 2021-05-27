@@ -4,7 +4,7 @@ const registerSchema = new yup.object({
     username: yup.string().min(4).max(30).required(),
     name: yup.string().max(256).required(),
     email: yup.string().email().required(),
-    password: yup.string().min(10).max(40).required()
+    password: yup.string().min(10).max(40).required(),
 });
 
 

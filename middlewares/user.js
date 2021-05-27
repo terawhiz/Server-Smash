@@ -1,6 +1,19 @@
 const Users = require('../models/User');
 
 
+
+const profileUpload = (req, res) => {
+    try {
+        console.log(req);
+        res.json({
+            error: false,
+            message: 'File uploaded'
+        });
+    } catch (error) {
+        res.send(error)
+    }
+}
+
 const followingInc = function (userId, followId) {
     try {
         const following = Users.findByIdAndUpdate(
@@ -96,4 +109,5 @@ module.exports = {
     profile,
     follow,
     unfollow,
+    profileUpload
 }
