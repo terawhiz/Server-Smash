@@ -1,5 +1,6 @@
 const Users = require('../models/User');
 const Posts = require('../models/Posts');
+const { urlencoded } = require('express');
 
 
 const postValidation = (schema) => async (req, res, next) => {
@@ -31,14 +32,11 @@ const homeFeed = async (req, res) => {
 
 
 const newPost = async (req, res) => {
-
-    // request -->
-    //     "userId": user id of the user,
-    //     "content ": content of the post
-
+    const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
     const post = new Posts({
         postedBy: req.body.userId,
         content: req.body.content,
+        imgUrl: url,
         comments: [],
         likedBy: [],
     });

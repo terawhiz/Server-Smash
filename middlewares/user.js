@@ -2,15 +2,13 @@ const Users = require('../models/User');
 
 
 
-const profileUpload = (req, res) => {
+const profileUpload = async (req, res) => {
     try {
-        console.log(req);
-        res.json({
-            error: false,
-            message: 'File uploaded'
-        });
+        const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
+        const blah = await Users.findByIdAndUpdate(req.body.userId, { profileUrl: url });
+        await res.send(blah);
     } catch (error) {
-        res.send(error)
+        res.send(error);
     }
 }
 

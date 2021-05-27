@@ -13,7 +13,6 @@ const app = express();
 const authRoute = require('./router/userAuth');
 const userRoute = require('./router/userHandle');
 const postRoute = require('./router/userPost');
-const userMedia = require('./router/userMedia');
 const { authJwt } = require('./middlewares/auth');
 
 
@@ -30,9 +29,8 @@ app.use(cors());
 app.use(compression());
 app.use('/_dsfjhsdjfh', express.static(__dirname + '/_dsfjhsdjfh'));
 app.use('/api/auth', authRoute);
-app.use('/api/user', authJwt, userRoute);
-app.use('/api/post', authJwt, postRoute);
-app.use('/api/media', userMedia);
+app.use('/api/user', userRoute);
+app.use('/api/post', postRoute);
 
 
 
