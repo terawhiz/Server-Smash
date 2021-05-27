@@ -1,6 +1,5 @@
 const Users = require('../models/User');
 const Posts = require('../models/Posts');
-const { urlencoded } = require('express');
 
 
 const postValidation = (schema) => async (req, res, next) => {
@@ -20,10 +19,10 @@ const homeFeed = async (req, res) => {
         const following = result.following;
 
         const sendData = await Promise.all(following.map(async (userId) => {
-            return Posts.find({ postedBy: userId });
+            return Posts.find({
+                postedBy: userId
+            });
         }));
-
-
         res.status(404).send(sendData);
     } catch (error) {
         res.status(404).send(error.message);
@@ -53,7 +52,9 @@ const allPosts = async (req, res) => {
         const allPosts = await Posts.find();
         res.status(201).send(allPosts);
     } else {
-        res.status(403).json({ status: 403, message: 'you\'are not allowed' });
+        res.status(403).json({
+            status: 403, message: 'you\'are not allowed'
+        });
     }
 }
 
@@ -76,14 +77,17 @@ const likePost = async (req, res) => {
 
 
 const dislikePost = async (req, res) => {
-
-    // REQUEST --> POST ID FROM THE URL PARAMETER AND USER ID FROM THE REQYUEST BODY 
-
     try {
         const result = await Posts.findByIdAndUpdate(
             req.params.postId,
-            { $pull: { likedBy: req.body.userId } },
-            { new: true }
+            {
+                $pull: {
+                    likedBy: req.body.userId
+                }
+            },
+            {
+                new: true
+            }
         );
         res.send(result);
     } catch (error) {
@@ -92,10 +96,6 @@ const dislikePost = async (req, res) => {
 }
 
 const comment = async (req, res) => {
-
-    // REQUEST --> POST ID FROM THE URL PARAMETER
-    //             USER ID AND COMMENT VALUE FROM THE REQUEST BODY 
-
     try {
         const value = { content: req.body.content, postedBy: req.body.userId };
         const result = await Posts.findByIdAndUpdate(
@@ -103,7 +103,6 @@ const comment = async (req, res) => {
             { $push: { comments: value } },
             { new: true }
         );
-        // console.log(result);
         res.send(result);
     } catch (error) {
         res.status(400).send(error.message);
@@ -113,7 +112,9 @@ const comment = async (req, res) => {
 
 const userPosts = async (req, res) => {
     try {
-        const blah = await Posts.find({ postedBy: req.body.posterId });
+        const blah = await Posts.find({
+            postedBy: req.body.posterId
+        });
         res.send(blah);
     } catch (error) {
         res.send(error.message);

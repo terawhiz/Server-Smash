@@ -6,7 +6,7 @@ const profileUpload = async (req, res) => {
     try {
         const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
         const blah = await Users.findByIdAndUpdate(req.body.userId, { profileUrl: url });
-        await res.send(blah);
+        res.send(blah);
     } catch (error) {
         res.send(error);
     }
@@ -30,8 +30,14 @@ const followersInc = function (userId, followId) {
     try {
         const followers = Users.findByIdAndUpdate(
             followId,
-            { $push: { followers: userId } },
-            { new: true }
+            {
+                $push: {
+                    followers: userId
+                }
+            },
+            {
+                new: true
+            }
         );
         return followers
     } catch (error) {
@@ -44,8 +50,14 @@ const followingDec = function (userId, followId) {
     try {
         const following = Users.findByIdAndUpdate(
             userId,
-            { $pull: { following: followId } },
-            { new: true }
+            {
+                $pull: {
+                    following: followId
+                }
+            },
+            {
+                new: true
+            }
         );
         return following
     } catch (error) {
@@ -58,8 +70,14 @@ const followersDec = function (userId, followId) {
     try {
         const followers = Users.findByIdAndUpdate(
             followId,
-            { $pull: { followers: userId } },
-            { new: true }
+            {
+                $pull: {
+                    followers: userId
+                }
+            },
+            {
+                new: true
+            }
         );
         return followers
     } catch (error) {

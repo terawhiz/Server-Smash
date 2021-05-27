@@ -34,7 +34,7 @@ const upload = multer({
 });
 
 
-// ROUTES
+
 router.post(
     '/new',
     upload.single('postImg'),

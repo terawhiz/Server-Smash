@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
-    postedBy: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'User'
+    },
     content: {
         type: String,
         required: true
@@ -12,7 +15,10 @@ const postSchema = mongoose.Schema({
     comments: [
         {
             content: String,
-            postedBy: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
+            postedBy: {
+                type: mongoose.Schema.Types.ObjectID,
+                ref: 'User'
+            },
             time: {
                 type: Date,
                 default: Date.now(),
@@ -20,7 +26,10 @@ const postSchema = mongoose.Schema({
         },
     ],
     likedBy: [
-        { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
+        {
+            type: mongoose.Schema.Types.ObjectID,
+            ref: 'User'
+        },
     ],
     time: {
         type: Date,

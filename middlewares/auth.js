@@ -28,14 +28,13 @@ const register = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        profileUrl: `http://${req.rawHeaders[1]}/images/user/default.jpg`
+        profileUrl: `http://${process.env.MEDIA_BASE_URL}:${process.env.PORT}/images/user/default.jpg`
     });
     try {
         const savedUser = await user.save();
-        // console.log(savedUser);
         res.status(201).send(savedUser);
     } catch (error) {
-        res.send(error).status(400);
+        res.status(400).send(error);
     }
 }
 
@@ -77,10 +76,19 @@ const login = async (req, res) => {
     if (!user) return res.send('User not found').status(401);
 
     if (user.password === req.body.password) {
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: 1800 });
-        res.status(200).cookie('auth_token', token).send({ auth: true, message: 'you are logged in' });
+        const token = jwt.sign({
+            id: user._id
+        }, process.env.JWT_SECRET_KEY, {
+            expiresIn: 1800
+        });
+        res.status(200).cookie('auth_token', token).send({
+            auth: true, message: 'you are logged in'
+        });
     } else {
-        res.send('WRONG PASSWORD').status(401);
+        res.status(401).json({
+            auth: false,
+            message: 'pasword doesn\'t match'
+        });
     }
 
 }

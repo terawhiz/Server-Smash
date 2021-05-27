@@ -5,12 +5,14 @@ const router = require('express').Router();
 
 
 // IMPORTING MODELS AND MIDDLEWARES
-const { registerValidation,
+const {
+    registerValidation,
     loginValidation,
     register,
     login
 } = require('../middlewares/auth');
-const { registerSchema,
+const {
+    registerSchema,
     loginSchema
 } = require('../validations/userValidations');
 
