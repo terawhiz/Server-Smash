@@ -49,7 +49,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/auth/register' \
 ```bash
 #REQUEST
 curl --location --request POST 'http://127.0.0.1:2000/api/auth/login' \
---header 'Content-Type: application/json'\
+--header 'Content-Type: application/json' \
 --data-raw '{
     "username": "test1",
     "password": "testit1234"
@@ -88,6 +88,8 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/follow/<FOLLOWER 
 
 #### Unfollow a User:
 
+`Unfollow a user`
+
 ```bash
 # REQUEST
 curl --location --request POST 'http://127.0.0.1:2000/api/user/unfollow/<FOLLOWER USER ID>' \
@@ -103,5 +105,31 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/unfollow/<FOLLOWE
 {
   "error": false,
   "message": "You unfollowed test2"
+}
+```
+
+#### Profile:
+
+`Get profile data of a user`
+
+```bash
+curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
+--header 'x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjBmODMxZDdjOGUzMmI3YmQyNjFiZCIsImlhdCI6MTYyMjIxNTM0OCwiZXhwIjoxNjIyMjE3MTQ4fQ.r4y_xPOVlxWatqo1N4Y9Gd6G_yxfZac9VjTZoKM-42s' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId": "<YOUR-USER-ID>",
+    "profileId": "<USERID-OF-THE-PERSON-WHOSE-PROFILE-DATA-YOU-NEED>"
+}'
+```
+
+```JS
+{
+    "_id": "60b0f831d7c8e32b7bd261bd",
+    "username": "test1",
+    "name": "test1",
+    "email": "1@test.com",
+    "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/default.jpg",
+    "following": [],
+    "followers": []
 }
 ```

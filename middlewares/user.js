@@ -93,7 +93,16 @@ const profile = async (req, res) => {
     try {
         const profileId = req.body.profileId;
         const result = await Users.findById(profileId);
-        res.send(result);
+        res.json({
+            _id: result._id,
+            username: result.username,
+            name: result.name,
+            email: result.email,
+            profileUrl: result.profileUrl,
+            following: result.following,
+            followers: result.followers
+        });
+        // res.send(result);
     } catch (error) {
         res.status(400).json({
             error: true,
