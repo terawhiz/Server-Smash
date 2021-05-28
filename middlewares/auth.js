@@ -7,7 +7,10 @@ const registerValidation = (schema) => async (req, res, next) => {
         await schema.validate(req.body);
         return next();
     } catch (error) {
-        return res.status(400).send(error);
+        return res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -21,20 +24,30 @@ const register = async (req, res) => {
 
     // USERNAME CHECK 
     const usernameExist = await Users.findOne({ username: req.body.username });
-    if (usernameExist) return res.send('Username already exists').status(400);
+    if (usernameExist) return res.status(400).json({
+        error: true,
+        message: 'Username already exists'
+    });
 
     user = new Users({
         username: req.body.username,
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        profileUrl: `http://${process.env.MEDIA_BASE_URL}:${process.env.PORT}/images/user/default.jpg`
+        profileUrl: `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/_dsfjhsdjfh/users/default.jpg`
     });
     try {
         const savedUser = await user.save();
-        res.status(201).send(savedUser);
+        res.status(201).json({
+            error: false,
+            message: 'user registered successfully',
+            redirect: '/login'
+        });
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -44,7 +57,10 @@ const loginValidation = (schema) => async (req, res, next) => {
         await schema.validate(req.body);
         return next();
     } catch (error) {
-        return res.status(400).send(error);
+        return res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -62,18 +78,27 @@ const authJwt = async (req, res, next) => {
                 }
 
             } else {
-                return res.send(error);
+                return res.status(401).json({
+                    error: true,
+                    message: error
+                });
             }
         });
     } catch (error) {
-        return res.status(400).send(error)
+        return res.status(400).json({
+            error: true,
+            message: error
+        })
     }
 }
 
 
 const login = async (req, res) => {
     const user = await Users.findOne({ username: req.body.username });
-    if (!user) return res.send('User not found').status(401);
+    if (!user) return res.status(401).json({
+        error: true,
+        message: 'User not found'
+    });
 
     if (user.password === req.body.password) {
         const token = jwt.sign({
@@ -81,12 +106,12 @@ const login = async (req, res) => {
         }, process.env.JWT_SECRET_KEY, {
             expiresIn: 1800
         });
-        res.status(200).cookie('auth_token', token).send({
-            auth: true, message: 'you are logged in'
+        res.status(200).cookie('auth_token', token).json({
+            error: false, message: 'you are logged in'
         });
     } else {
         res.status(401).json({
-            auth: false,
+            error: true,
             message: 'pasword doesn\'t match'
         });
     }
