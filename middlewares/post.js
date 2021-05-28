@@ -37,28 +37,26 @@ const homeFeed = async (req, res) => {
 
 
 const newPost = async (req, res) => {
+    if (req.file) {
+        const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
+        var post = new Posts({
+            postedBy: req.body.userId,
+            content: req.body.content,
+            imgUrl: url,
+            comments: [],
+            likedBy: [],
+        });
+    } else {
+        var post = new Posts({
+            postedBy: req.body.userId,
+            content: req.body.content,
+            comments: [],
+            likedBy: [],
+        });
+    }
     try {
-        if (req.file) {
-            const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
-            const post = new Posts({
-                postedBy: req.body.userId,
-                content: req.body.content,
-                imgUrl: url,
-                comments: [],
-                likedBy: [],
-            });
-            const savedPost = await post.save();
-            res.send(savedPost);
-        } else {
-            const post = new Posts({
-                postedBy: req.body.userId,
-                content: req.body.content,
-                comments: [],
-                likedBy: [],
-            });
-            const savedPost = await post.save();
-            res.send(savedPost);
-        }
+        const savedPost = await post.save();
+        res.send(savedPost);
     } catch (error) {
         res.status(400).json({
             error: true,
