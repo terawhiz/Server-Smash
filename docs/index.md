@@ -212,3 +212,102 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/new' \
 --form 'postImg=@"/home/shunt/Downloads/guy_with_cat.jpg"' \
 --form 'content="hmmm uploading with img"'
 ```
+
+```js
+// RESPONSE
+{
+    "error": false,
+    "likedBy": [],
+    "time": "2021-05-28T18:23:51.455Z",
+    "_id": "60b1357f3de8f8bcc70e404d",
+    "postedBy": "60b0f831d7c8e32b7bd261bd",
+    "content": "hmmm uploading with img",
+    "imgUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/posts/1622226303102-guy_with_cat.jpg",
+    "comments": [],
+    "__v": 0
+}
+```
+
+#### Home feed
+
+`get your folloing's posts`
+
+```bash
+# REQUEST
+curl --location --request POST 'http://127.0.0.1:2000/api/post/homeFeed' \
+--header 'x-access-token: <JWT-TOKEN>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId": "60b0f831d7c8e32b7bd261bd"
+}'
+```
+
+```js
+// RESPONSE
+[
+  [
+    {
+      likedBy: [],
+      time: "2021-05-28T18:45:15.488Z",
+      _id: "60b14414187241cac3d1f16b",
+      postedBy: "60b0fa04d7c8e32b7bd261be",
+      content: "test post 1",
+      comments: [],
+      __v: 0,
+    },
+  ],
+  [
+    {
+      likedBy: [],
+      time: "2021-05-28T18:45:15.488Z",
+      _id: "60b14445187241cac3d1f16c",
+      postedBy: "60b0fa12d7c8e32b7bd261bf",
+      content: "test post 2",
+      comments: [],
+      __v: 0,
+    },
+  ],
+  [
+    {
+      likedBy: [],
+      time: "2021-05-28T18:45:15.488Z",
+      _id: "60b14465187241cac3d1f16d",
+      postedBy: "60b0fa1dd7c8e32b7bd261c0",
+      content: "test post 2",
+      comments: [],
+      __v: 0,
+    },
+  ],
+  [],
+  [],
+];
+```
+
+#### Like a post:
+
+`Like a post with post id`
+
+```bash
+# REQUEST
+curl --location --request POST 'http://127.0.0.1:2000/api/post/like/60b14414187241cac3d1f16b' \
+--header 'x-access-token: <JWT-TOKEN>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId": "60b0f831d7c8e32b7bd261bd"
+}'
+```
+
+```js
+// RESPONSE
+{
+    "likedBy": [
+        "60b0f831d7c8e32b7bd261bd"
+    ],
+    "time": "2021-05-28T18:45:15.488Z",
+    "_id": "60b14414187241cac3d1f16b",
+    "postedBy": "60b0fa04d7c8e32b7bd261be",
+    "content": "test post 1",
+    "comments": [],
+    "__v": 0
+}
+```
