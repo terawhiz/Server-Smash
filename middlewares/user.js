@@ -102,9 +102,15 @@ const follow = async (req, res) => {
         const followingIncrement = await followingInc(req.userId, req.params.followId);
         const followersIncrement = await followersInc(req.userId, req.params.followId);
 
-        res.send({ followersIncrement, followingIncrement }).status(200);
+        res.send({
+            error: false,
+            message: `you are following ${followersIncrement.username}`
+        }).status(200);
     } catch (error) {
-        res.send(error).status(400);
+        res.send({
+            error: true,
+            message: error.message
+        }).status(400);
     }
 }
 
@@ -114,7 +120,10 @@ const unfollow = async (req, res) => {
         const followingDecrement = await followingDec(req.userId, req.params.followId);
         const followersDecrement = await followersDec(req.userId, req.params.followId);
 
-        res.send({ followersDecrement, followingDecrement }).status(200);
+        res.send({
+            error: false,
+            message: `You unfollowed ${followersDecrement.username}`
+        }).status(200);
     } catch (error) {
         res.send(error).status(400);
     }
