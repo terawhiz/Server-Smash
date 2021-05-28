@@ -7,7 +7,10 @@ const postValidation = (schema) => async (req, res, next) => {
         await schema.validate(req.body);
         return next();
     } catch (error) {
-        return res.status(400).send(error);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -23,9 +26,12 @@ const homeFeed = async (req, res) => {
                 postedBy: userId
             });
         }));
-        res.status(404).send(sendData);
+        res.status(200).send(sendData);
     } catch (error) {
-        res.status(404).send(error.message);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -43,7 +49,10 @@ const newPost = async (req, res) => {
         const savedPost = await post.save();
         res.send(savedPost);
     } catch (error) {
-        res.send(error).status(400);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -71,7 +80,10 @@ const likePost = async (req, res) => {
         );
         res.send(result);
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -91,7 +103,10 @@ const dislikePost = async (req, res) => {
         );
         res.send(result);
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -105,7 +120,10 @@ const comment = async (req, res) => {
         );
         res.send(result);
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -117,7 +135,10 @@ const userPosts = async (req, res) => {
         });
         res.send(blah);
     } catch (error) {
-        res.send(error.message);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 

@@ -74,20 +74,20 @@ const authJwt = async (req, res, next) => {
                     req.userId = decoded.id;
                     return next();
                 } else {
-                    return res.json({ auth: 'false', message: 'something went wrong' });
+                    return res.json({ error: true, message: 'something went wrong' });
                 }
 
             } else {
                 return res.status(401).json({
                     error: true,
-                    message: error
+                    message: error.message
                 });
             }
         });
     } catch (error) {
         return res.status(400).json({
             error: true,
-            message: error
+            message: error.message
         })
     }
 }

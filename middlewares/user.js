@@ -8,7 +8,10 @@ const profileUpload = async (req, res) => {
         const blah = await Users.findByIdAndUpdate(req.body.userId, { profileUrl: url });
         res.send(blah);
     } catch (error) {
-        res.send(error);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -92,7 +95,10 @@ const profile = async (req, res) => {
         const result = await Users.findById(profileId);
         res.send(result);
     } catch (error) {
-        res.send(error.message);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
@@ -107,10 +113,10 @@ const follow = async (req, res) => {
             message: `you are following ${followersIncrement.username}`
         }).status(200);
     } catch (error) {
-        res.send({
+        res.status(400).json({
             error: true,
             message: error.message
-        }).status(400);
+        });
     }
 }
 
@@ -125,7 +131,10 @@ const unfollow = async (req, res) => {
             message: `You unfollowed ${followersDecrement.username}`
         }).status(200);
     } catch (error) {
-        res.send(error).status(400);
+        res.status(400).json({
+            error: true,
+            message: error.message
+        });
     }
 }
 
