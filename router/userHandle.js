@@ -24,10 +24,10 @@ const upload = multer({
 
 
 
-
 router.post(
     '/profileUpload',
     upload.single('profilePhoto'),
+    authJwt,
     profileUpload
 );
 

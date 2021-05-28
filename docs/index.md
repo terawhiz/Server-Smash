@@ -72,7 +72,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/auth/login' \
 # REQUEST
 curl --location --request POST 'http://127.0.0.1:2000/api/user/follow/<FOLLOWER USER ID>' \
 --header 'Content-Type: application/json' \
---header 'Cookie: auth_token=<AUTH-TOKEN>' \
+--header 'x-access-token: <AUTH-TOKEN>' \
 --data-raw '{
     "userId": "<YOUR USER ID>"
 }'
@@ -94,7 +94,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/follow/<FOLLOWER 
 # REQUEST
 curl --location --request POST 'http://127.0.0.1:2000/api/user/unfollow/<FOLLOWER USER ID>' \
 --header 'Content-Type: application/json' \
---header 'Cookie: auth_token=<AUTH-TOKEN>' \
+--header 'x-access-token: <AUTH-TOKEN>' \
 --data-raw '{
     "userId": "<YOUR USER ID>"
 }'
@@ -113,8 +113,9 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/unfollow/<FOLLOWE
 `Get profile data of a user`
 
 ```bash
+# REQUEST
 curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
---header 'x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjBmODMxZDdjOGUzMmI3YmQyNjFiZCIsImlhdCI6MTYyMjIxNTM0OCwiZXhwIjoxNjIyMjE3MTQ4fQ.r4y_xPOVlxWatqo1N4Y9Gd6G_yxfZac9VjTZoKM-42s' \
+--header 'x-access-token: <AUTH-TOKEN>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "userId": "<YOUR-USER-ID>",
@@ -122,7 +123,8 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
 }'
 ```
 
-```JS
+```js
+// RESPONSE
 {
     "_id": "60b0f831d7c8e32b7bd261bd",
     "username": "test1",
@@ -131,5 +133,38 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
     "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/default.jpg",
     "following": [],
     "followers": []
+}
+```
+
+#### Profile Image Upload:
+
+`Upload your profile image in this route`
+
+```bash
+# REQUEST
+curl --location --request POST 'http://127.0.0.1:2000/api/user/profileUpload' \
+--header 'x-access-token: <AUTH-TOKEN>' \
+--form 'userId="60b0f831d7c8e32b7bd261bd"' \
+--form 'profilePhoto=@"/home/shunt/Downloads/guy_with_cat.jpg"'
+```
+
+```js
+// RESPONSE
+{
+    "error": false,
+    "username": "test1",
+    "name": "test1",
+    "email": "1@test.com",
+    "following": [
+        "60b0fa04d7c8e32b7bd261be",
+        "60b0fa12d7c8e32b7bd261bf",
+        "60b0fa1dd7c8e32b7bd261c0",
+        "60b0fa26d7c8e32b7bd261c1"
+    ],
+    "followers": [
+        "60b0fa51d7c8e32b7bd261c2",
+        "60b0fa26d7c8e32b7bd261c1",
+    ],
+    "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/1622218344372-guy_with_cat.jpg"
 }
 ```

@@ -6,7 +6,15 @@ const profileUpload = async (req, res) => {
     try {
         const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
         const blah = await Users.findByIdAndUpdate(req.body.userId, { profileUrl: url });
-        res.send(blah);
+        res.json({
+            error: false,
+            username: blah.username,
+            name: blah.name,
+            email: blah.email,
+            following: blah.following,
+            followers: blah.followers,
+            profileUrl: blah.profileUrl
+        });
     } catch (error) {
         res.status(400).json({
             error: true,
