@@ -37,17 +37,28 @@ const homeFeed = async (req, res) => {
 
 
 const newPost = async (req, res) => {
-    const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
-    const post = new Posts({
-        postedBy: req.body.userId,
-        content: req.body.content,
-        imgUrl: url,
-        comments: [],
-        likedBy: [],
-    });
     try {
-        const savedPost = await post.save();
-        res.send(savedPost);
+        if (req.file) {
+            const url = `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/${req.file.path}`
+            const post = new Posts({
+                postedBy: req.body.userId,
+                content: req.body.content,
+                imgUrl: url,
+                comments: [],
+                likedBy: [],
+            });
+            const savedPost = await post.save();
+            res.send(savedPost);
+        } else {
+            const post = new Posts({
+                postedBy: req.body.userId,
+                content: req.body.content,
+                comments: [],
+                likedBy: [],
+            });
+            const savedPost = await post.save();
+            res.send(savedPost);
+        }
     } catch (error) {
         res.status(400).json({
             error: true,

@@ -126,6 +126,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
 ```js
 // RESPONSE
 {
+    "error": false,
     "_id": "60b0f831d7c8e32b7bd261bd",
     "username": "test1",
     "name": "test1",
@@ -138,7 +139,8 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
 
 #### Profile Image Upload:
 
-`Upload your profile image in this route`
+`Upload your profile image in this route`<br>
+NOTE: _multer_ automatically parses the form data into req.body
 
 ```bash
 # REQUEST
@@ -167,4 +169,46 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profileUpload' \
     ],
     "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/1622218344372-guy_with_cat.jpg"
 }
+```
+
+#### Adding a post without Image:
+
+`Add a new user post without image in this route`
+
+```bash
+# REQUEST
+curl --location --request POST 'http://127.0.0.1:2000/api/post/new' \
+--header 'x-access-token: <JWT-TOKEN-HERE>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId": "YOUR-USER-ID",
+    "content": "Hmm I see SO YOU aRE READING THIS PERSONAL DOCUMENTATION? TRY CLICKING THE STAR BUTTON IN TOP RIGHT CORNER OF THIS REPOSITORY YOU WILL SEE MAGICS xd"
+}'
+```
+
+```js
+// RESPONSE
+{
+    "likedBy": [],
+    "time": "2021-05-28T18:06:37.598Z",
+    "_id": "60b131dff83ec9b68a899880",
+    "postedBy": "60b0f831d7c8e32b7bd261bd",
+    "content": "blah blah",
+    "comments": [],
+    "__v": 0
+}
+```
+
+#### Adding a post with Image:
+
+`Add a new user post with image in this route`<br>
+NOTE: _multer_ automatically parses the form data into req.body
+
+```bash
+# REQUEST
+curl --location --request POST 'http://127.0.0.1:2000/api/post/new' \
+--header 'x-access-token: <JWT-TOKEN>' \
+--form 'userId="60b0f831d7c8e32b7bd261bd"' \
+--form 'postImg=@"/home/shunt/Downloads/guy_with_cat.jpg"' \
+--form 'content="hmmm uploading with img"'
 ```
