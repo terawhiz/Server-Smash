@@ -311,3 +311,63 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/like/60b144141872
     "__v": 0
 }
 ```
+
+#### Dislike a post:
+
+`Dislike a post with post id`
+
+```bash
+# REQUEST
+curl --location --request POST 'http://127.0.0.1:2000/api/post/dislike/60b14414187241cac3d1f16b' \
+--header 'x-access-token: <JWT-TOKEN>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId": "60b0f831d7c8e32b7bd261bd"
+}'
+```
+
+```js
+// RESPONSE
+{
+    "likedBy": [],
+    "time": "2021-05-28T18:45:15.488Z",
+    "_id": "60b14414187241cac3d1f16b",
+    "postedBy": "60b0fa04d7c8e32b7bd261be",
+    "content": "test post 1",
+    "comments": [],
+    "__v": 0
+}
+```
+
+#### Comment on a post
+
+`Commenting on a post`
+
+```bash
+curl --location --request POST 'http://127.0.0.1:2000/api/post/comment/60b14414187241cac3d1f16b' \
+--header 'x-access-token: <JWT-TOKEN>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId": "60b0f831d7c8e32b7bd261bd",
+    "content": "blah blah 1st comment"
+}'
+```
+
+```js
+{
+    "likedBy": [],
+    "time": "2021-05-28T18:45:15.488Z",
+    "_id": "60b14414187241cac3d1f16b",
+    "postedBy": "60b0fa04d7c8e32b7bd261be",
+    "content": "test post 1",
+    "comments": [
+        {
+            "time": "2021-05-28T19:43:09.004Z",
+            "_id": "60b148570b2337e5164e66e1",
+            "content": "blah blah 1st comment",
+            "postedBy": "60b0f831d7c8e32b7bd261bd"
+        }
+    ],
+    "__v": 0
+}
+```
