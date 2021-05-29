@@ -99,18 +99,16 @@ const followersDec = function (userId, followId) {
 
 const profile = async (req, res) => {
     try {
-        const profileId = req.body.profileId;
-        const result = await Users.findById(profileId);
+        const result = await Users.find({ username: req.body.username });
         res.json({
-            _id: result._id,
-            username: result.username,
-            name: result.name,
-            email: result.email,
-            profileUrl: result.profileUrl,
-            following: result.following,
-            followers: result.followers
+            _id: result[0]._id,
+            username: result[0].username,
+            name: result[0].name,
+            email: result[0].email,
+            profileUrl: result[0].profileUrl,
+            following: result[0].following,
+            followers: result[0].followers
         });
-        // res.send(result);
     } catch (error) {
         res.status(400).json({
             error: true,

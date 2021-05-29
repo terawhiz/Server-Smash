@@ -119,7 +119,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "userId": "<YOUR-USER-ID>",
-    "profileId": "<USERID-OF-THE-PERSON-WHOSE-PROFILE-DATA-YOU-NEED>"
+    "username": "USERNAME-OF-THE-PERSON"
 }'
 ```
 
