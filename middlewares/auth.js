@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Users = require('../models/User');
+const bcrypt = require('bcrypt');
+let saltRounds = 10;
 
 
 const registerValidation = (schema) => async (req, res, next) => {
@@ -28,16 +30,16 @@ const register = async (req, res) => {
         error: true,
         message: 'Username already exists'
     });
-
-    user = new Users({
-        username: req.body.username,
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        profileUrl: `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/_dsfjhsdjfh/users/default.jpg`
-    });
     try {
-        const savedUser = await user.save();
+        const hashedPass = await bcrypt.hash(req.body.password, saltRounds);
+        const user = new Users({
+            username: req.body.username,
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPass,
+            profileUrl: `${process.env.MEDIA_BASE_URL}:${process.env.PORT}/_dsfjhsdjfh/users/default.jpg`
+        });
+        await user.save();
         res.status(201).json({
             error: false,
             message: 'user registered successfully',
@@ -99,8 +101,8 @@ const login = async (req, res) => {
         error: true,
         message: 'User not found'
     });
-
-    if (user.password === req.body.password) {
+    const what = await bcrypt.compare(req.body.password, user.password);
+    if (what) {
         const token = jwt.sign({
             id: user._id
         }, process.env.JWT_SECRET_KEY, {
