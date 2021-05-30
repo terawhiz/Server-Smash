@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const compression = require('compression');
+const morgan = require('morgan');
 const cors = require('cors');
 
 // APP 
@@ -24,6 +25,7 @@ mongoose.set('useFindAndModify', false);
 app.use(express.json());
 app.use(cors());
 app.use(compression());
+app.use(morgan('dev'));
 app.use('/_dsfjhsdjfh', express.static(__dirname + '/_dsfjhsdjfh'));
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);

@@ -109,7 +109,9 @@ const login = async (req, res) => {
             expiresIn: 1800
         });
         res.status(200).cookie('auth_token', token).json({
-            error: false, message: 'you are logged in'
+            error: false,
+            auth: true,
+            message: 'you are logged in'
         });
     } else {
         res.status(401).json({
