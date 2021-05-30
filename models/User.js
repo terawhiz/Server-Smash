@@ -5,7 +5,7 @@ const userShema = mongoose.Schema({
     username: {
         type: String,
         min: 4,
-        max: 30,
+        max: 39,
         required: true,
     },
     name: {
@@ -26,8 +26,8 @@ const userShema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        min: 8,
-        max: 1024
+        min: 10,
+        max: 70
     },
     following: [
         {
@@ -41,6 +41,18 @@ const userShema = mongoose.Schema({
             ref: 'User',
         }
     ],
+    githubUsername: {
+        type: String,
+        max: 39
+    },
+    twitterUsername: {
+        type: String,
+        max: 15
+    },
+    instagramUsername: {
+        type: String,
+        max: 30
+    },
     date: {
         type: Date,
         default: Date.now()
