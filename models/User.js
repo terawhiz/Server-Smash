@@ -14,6 +14,11 @@ const userShema = mongoose.Schema({
         max: 40,
         required: true,
     },
+    about: {
+        type: String,
+        min: 5,
+        max: 256
+    },
     profileUrl: {
         type: String,
         required: true
@@ -53,6 +58,36 @@ const userShema = mongoose.Schema({
         type: String,
         max: 30
     },
+    country: {
+        type: String,
+        min: 3,
+        max: 20
+    },
+    city: {
+        type: String,
+        min: 3,
+        max: 20
+    },
+    contact: {
+        type: Number,
+        min: 10,
+        max: 10,
+    },
+    status: {
+        type: String
+    },
+    work: {
+        type: String,
+    },
+    university: {
+        type: String,
+    },
+    school: {
+        type: String
+    },
+    previousPassword: {
+        type: String,
+    }
     date: {
         type: Date,
         default: Date.now()
