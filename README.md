@@ -1,4 +1,4 @@
-# Server-Stacksmash
+# Server-Smash
 
 ```bash
 # Install dependencies...
