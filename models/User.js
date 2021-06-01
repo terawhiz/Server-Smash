@@ -87,7 +87,7 @@ const userShema = mongoose.Schema({
     },
     previousPassword: {
         type: String,
-    }
+    },
     date: {
         type: Date,
         default: Date.now()

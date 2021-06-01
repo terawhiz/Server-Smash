@@ -24,7 +24,7 @@ const upload = multer({
 
 
 
-router.post(
+router.put(
     '/profileUpload',
     upload.single('profilePhoto'),
     authJwt,
@@ -34,11 +34,11 @@ router.post(
 
 router.use(authJwt);
 
-router.post(
+router.put(
     '/follow/:followId',
     follow
 );
-router.post(
+router.put(
     '/unfollow/:followId',
     unfollow
 );
