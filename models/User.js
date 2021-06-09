@@ -46,6 +46,10 @@ const userShema = mongoose.Schema({
             ref: 'User',
         }
     ],
+    description: {
+        type: String,
+        max: 250
+    },
     githubUsername: {
         type: String,
         max: 39
@@ -57,6 +61,9 @@ const userShema = mongoose.Schema({
     instagramUsername: {
         type: String,
         max: 30
+    },
+    dob: {
+        type: Date,
     },
     country: {
         type: String,

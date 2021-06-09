@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { number } = require('yup');
 
 const postSchema = mongoose.Schema({
     postedBy: {
@@ -19,6 +20,16 @@ const postSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectID,
                 ref: 'User'
             },
+            likedBy: [
+                {
+                    type: mongoose.Schema.Types.ObjectID,
+                    ref: 'User'
+                },
+            ],
+            likeCount: {
+                type: number,
+                default: 0
+            },
             time: {
                 type: Date,
                 default: Date.now(),
@@ -31,6 +42,10 @@ const postSchema = mongoose.Schema({
             ref: 'User'
         },
     ],
+    likeCount: {
+        type: number,
+        default: 0
+    },
     time: {
         type: Date,
         default: Date.now(),
