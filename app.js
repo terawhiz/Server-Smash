@@ -17,7 +17,7 @@ const postRoute = require('./router/userPost');
 
 
 // MONGODB CONNECT 
-mongoose.connect("mongodb://127.0.0.1:27017/stacksmash", { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('DB CONNECTED'));
+mongoose.connect("mongodb://127.0.0.1:27017/smash", { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('DB CONNECTED'));
 mongoose.set('useFindAndModify', false);
 
 

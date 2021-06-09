@@ -33,8 +33,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/auth/register' \
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
   "error": false,
   "message": "user registered successfully",
@@ -56,8 +55,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/auth/login' \
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
   "error": false,
   "message": "you are logged in"
@@ -70,7 +68,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/auth/login' \
 
 ```bash
 # REQUEST
-curl --location --request POST 'http://127.0.0.1:2000/api/user/follow/<FOLLOWER USER ID>' \
+curl --location --request PUT 'http://127.0.0.1:2000/api/user/follow/<FOLLOWER USER ID>' \
 --header 'Content-Type: application/json' \
 --header 'x-access-token: <AUTH-TOKEN>' \
 --data-raw '{
@@ -78,8 +76,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/follow/<FOLLOWER 
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
   "error": false,
   "message": "you are following test2"
@@ -92,7 +89,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/follow/<FOLLOWER 
 
 ```bash
 # REQUEST
-curl --location --request POST 'http://127.0.0.1:2000/api/user/unfollow/<FOLLOWER USER ID>' \
+curl --location --request PUT 'http://127.0.0.1:2000/api/user/unfollow/<FOLLOWER USER ID>' \
 --header 'Content-Type: application/json' \
 --header 'x-access-token: <AUTH-TOKEN>' \
 --data-raw '{
@@ -100,8 +97,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/unfollow/<FOLLOWE
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
   "error": false,
   "message": "You unfollowed test2"
@@ -123,17 +119,16 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profile' \
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
-    "error": false,
-    "_id": "60b0f831d7c8e32b7bd261bd",
-    "username": "test1",
-    "name": "test1",
-    "email": "1@test.com",
-    "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/default.jpg",
-    "following": [],
-    "followers": []
+  "error": false,
+  "_id": "60b0f831d7c8e32b7bd261bd",
+  "username": "test1",
+  "name": "test1",
+  "email": "1@test.com",
+  "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/default.jpg",
+  "following": [],
+  "followers": []
 }
 ```
 
@@ -150,24 +145,20 @@ curl --location --request POST 'http://127.0.0.1:2000/api/user/profileUpload' \
 --form 'profilePhoto=@"/home/shunt/Downloads/guy_with_cat.jpg"'
 ```
 
-```js
-// RESPONSE
+```json
 {
-    "error": false,
-    "username": "test1",
-    "name": "test1",
-    "email": "1@test.com",
-    "following": [
-        "60b0fa04d7c8e32b7bd261be",
-        "60b0fa12d7c8e32b7bd261bf",
-        "60b0fa1dd7c8e32b7bd261c0",
-        "60b0fa26d7c8e32b7bd261c1"
-    ],
-    "followers": [
-        "60b0fa51d7c8e32b7bd261c2",
-        "60b0fa26d7c8e32b7bd261c1",
-    ],
-    "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/1622218344372-guy_with_cat.jpg"
+  "error": false,
+  "username": "test1",
+  "name": "test1",
+  "email": "1@test.com",
+  "following": [
+    "60b0fa04d7c8e32b7bd261be",
+    "60b0fa12d7c8e32b7bd261bf",
+    "60b0fa1dd7c8e32b7bd261c0",
+    "60b0fa26d7c8e32b7bd261c1"
+  ],
+  "followers": ["60b0fa51d7c8e32b7bd261c2", "60b0fa26d7c8e32b7bd261c1"],
+  "profileUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/users/1622218344372-guy_with_cat.jpg"
 }
 ```
 
@@ -186,16 +177,15 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/new' \
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
-    "likedBy": [],
-    "time": "2021-05-28T18:06:37.598Z",
-    "_id": "60b131dff83ec9b68a899880",
-    "postedBy": "60b0f831d7c8e32b7bd261bd",
-    "content": "blah blah",
-    "comments": [],
-    "__v": 0
+  "likedBy": [],
+  "time": "2021-05-28T18:06:37.598Z",
+  "_id": "60b131dff83ec9b68a899880",
+  "postedBy": "60b0f831d7c8e32b7bd261bd",
+  "content": "blah blah",
+  "comments": [],
+  "__v": 0
 }
 ```
 
@@ -213,18 +203,17 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/new' \
 --form 'content="hmmm uploading with img"'
 ```
 
-```js
-// RESPONSE
+```json
 {
-    "error": false,
-    "likedBy": [],
-    "time": "2021-05-28T18:23:51.455Z",
-    "_id": "60b1357f3de8f8bcc70e404d",
-    "postedBy": "60b0f831d7c8e32b7bd261bd",
-    "content": "hmmm uploading with img",
-    "imgUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/posts/1622226303102-guy_with_cat.jpg",
-    "comments": [],
-    "__v": 0
+  "error": false,
+  "likedBy": [],
+  "time": "2021-05-28T18:23:51.455Z",
+  "_id": "60b1357f3de8f8bcc70e404d",
+  "postedBy": "60b0f831d7c8e32b7bd261bd",
+  "content": "hmmm uploading with img",
+  "imgUrl": "http://192.168.0.102:2000/_dsfjhsdjfh/posts/1622226303102-guy_with_cat.jpg",
+  "comments": [],
+  "__v": 0
 }
 ```
 
@@ -242,8 +231,7 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/homeFeed' \
 }'
 ```
 
-```js
-// RESPONSE
+```json
 [
   [
     {
@@ -297,18 +285,15 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/like/60b144141872
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
-    "likedBy": [
-        "60b0f831d7c8e32b7bd261bd"
-    ],
-    "time": "2021-05-28T18:45:15.488Z",
-    "_id": "60b14414187241cac3d1f16b",
-    "postedBy": "60b0fa04d7c8e32b7bd261be",
-    "content": "test post 1",
-    "comments": [],
-    "__v": 0
+  "likedBy": ["60b0f831d7c8e32b7bd261bd"],
+  "time": "2021-05-28T18:45:15.488Z",
+  "_id": "60b14414187241cac3d1f16b",
+  "postedBy": "60b0fa04d7c8e32b7bd261be",
+  "content": "test post 1",
+  "comments": [],
+  "__v": 0
 }
 ```
 
@@ -326,16 +311,15 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/dislike/60b144141
 }'
 ```
 
-```js
-// RESPONSE
+```json
 {
-    "likedBy": [],
-    "time": "2021-05-28T18:45:15.488Z",
-    "_id": "60b14414187241cac3d1f16b",
-    "postedBy": "60b0fa04d7c8e32b7bd261be",
-    "content": "test post 1",
-    "comments": [],
-    "__v": 0
+  "likedBy": [],
+  "time": "2021-05-28T18:45:15.488Z",
+  "_id": "60b14414187241cac3d1f16b",
+  "postedBy": "60b0fa04d7c8e32b7bd261be",
+  "content": "test post 1",
+  "comments": [],
+  "__v": 0
 }
 ```
 
@@ -353,21 +337,21 @@ curl --location --request POST 'http://127.0.0.1:2000/api/post/comment/60b144141
 }'
 ```
 
-```js
+```json
 {
-    "likedBy": [],
-    "time": "2021-05-28T18:45:15.488Z",
-    "_id": "60b14414187241cac3d1f16b",
-    "postedBy": "60b0fa04d7c8e32b7bd261be",
-    "content": "test post 1",
-    "comments": [
-        {
-            "time": "2021-05-28T19:43:09.004Z",
-            "_id": "60b148570b2337e5164e66e1",
-            "content": "blah blah 1st comment",
-            "postedBy": "60b0f831d7c8e32b7bd261bd"
-        }
-    ],
-    "__v": 0
+  "likedBy": [],
+  "time": "2021-05-28T18:45:15.488Z",
+  "_id": "60b14414187241cac3d1f16b",
+  "postedBy": "60b0fa04d7c8e32b7bd261be",
+  "content": "test post 1",
+  "comments": [
+    {
+      "time": "2021-05-28T19:43:09.004Z",
+      "_id": "60b148570b2337e5164e66e1",
+      "content": "blah blah 1st comment",
+      "postedBy": "60b0f831d7c8e32b7bd261bd"
+    }
+  ],
+  "__v": 0
 }
 ```
